@@ -160,6 +160,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.10.2)
+    jwt (2.10.1)
+      base64
     kamal (2.5.3)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -429,6 +431,7 @@ DEPENDENCIES
   faraday (~> 2.12, >= 2.12.2)
   guard-rspec (~> 4.7, >= 4.7.3)
   jbuilder (~> 2.13)
+  jwt (~> 2.10, >= 2.10.1)
   kamal
   pg (~> 1.1)
   puma (>= 5.0)
