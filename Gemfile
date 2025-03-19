@@ -40,21 +40,21 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem 'rspec-rails', '~> 7.0.0'
-  gem 'dotenv', '~> 3.1', '>= 3.1.7'
-  gem 'guard-rspec', '~> 4.7', '>= 4.7.3'
-  gem 'factory_bot_rails', '~> 6.4', '>= 6.4.4'
+  gem "rspec-rails", "~> 7.0.0"
+  gem "dotenv", "~> 3.1", ">= 3.1.7"
+  gem "guard-rspec", "~> 4.7", ">= 4.7.3"
+  gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
 end
 
 group :test do
-  gem 'shoulda-matchers', '~> 6.0'
-  gem 'simplecov', '~> 0.22.0', require: false
-  gem 'webmock', '~> 3.25', '>= 3.25.1'
+  gem "shoulda-matchers", "~> 6.0"
+  gem "simplecov", "~> 0.22.0", require: false
+  gem "webmock", "~> 3.25", ">= 3.25.1"
 end
 
 gem "sidekiq", "~> 8.0"
-gem 'sidekiq-cron', '~> 2.1'
+gem "sidekiq-cron", "~> 2.1"
 gem "redis", "~> 5.4"
 gem "jbuilder", "~> 2.13"
-gem 'stripe', '~> 13.5'
-gem 'faraday', '~> 2.12', '>= 2.12.2'
+gem "stripe", "~> 13.5"
+gem "faraday", "~> 2.12", ">= 2.12.2"
