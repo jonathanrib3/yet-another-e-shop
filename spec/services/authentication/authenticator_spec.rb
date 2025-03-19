@@ -1,0 +1,157 @@
+require 'rails_helper'
+
+RSpec.describe Authentication::Authenticator, type: :service do
+  include ActiveSupport::Testing::TimeHelpers
+
+  subject(:authenticator) { described_class.new(access_token:) }
+
+  context "when authenticating a valid token" do
+    let!(:user) { create(:user, id: 1) }
+    let(:fixed_time) { Time.new(1989, 06, 04) }
+    let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+    let(:exp) { Time.now().advance(hours: Authentication::Constants::EXPIRY_TIME_IN_HOURS) }
+    let(:iss) { 'localhost.test' }
+    let(:access_token) do
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+    end
+    let(:decoded_token) do
+      Authentication::DecodedJwtAccessTokenCredentials.new(
+        sub: user.id,
+        iat: Time.now(),
+        exp:,
+        jti:,
+        iss:
+      )
+    end
+    let(:jwt_decoder_service) { instance_double(Authentication::Decoder, call: decoded_token) }
+
+    before do
+      stub_const('Authentication::Constants::EXPIRY_TIME_IN_HOURS', 12)
+      stub_const('Authentication::Constants::JWT_SECRET', 'secret')
+      stub_const('Authentication::Constants::JWT_ISSUER', 'localhost.test')
+      stub_const('Authentication::Constants::JWT_ALGORITHM_HEADER', 'HS256')
+      stub_const('Authentication::Constants::JWT_TYP_HEADER', 'JWT')
+      allow(Authentication::Decoder).to receive(:new).and_return(jwt_decoder_service)
+      allow(Digest::UUID).to receive(:uuid_v4).and_return(jti)
+      travel_to(fixed_time)
+    end
+
+    it 'returns the user corresponding to the token sub' do
+      expect(authenticator.call).to eq(user)
+    end
+  end
+
+  context "when authenticating an invalid token" do
+    context "when user does not exists" do
+      let!(:user) { create(:user, id: 1) }
+      let(:fixed_time) { Time.new(1989, 06, 04) }
+      let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+      let(:exp) { Time.now().advance(hours: Authentication::Constants::EXPIRY_TIME_IN_HOURS).to_i }
+      let(:iss) { 'localhost.test' }
+      let(:access_token) do
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE5ODQsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.bwLymbjXzbALShUWSxDEZDHQhQnl0zqUlzrxm0dfCIQ"
+      end
+      let(:decoded_token) do
+        Authentication::DecodedJwtAccessTokenCredentials.new(
+          sub: 1984,
+          iat: Time.now(),
+          exp:,
+          jti:,
+          iss:
+        )
+      end
+      let(:jwt_decoder_service) { instance_double(Authentication::Decoder, call: decoded_token) }
+
+      before do
+        stub_const('Authentication::Constants::EXPIRY_TIME_IN_HOURS', 12)
+        stub_const('Authentication::Constants::JWT_SECRET', 'secret')
+        stub_const('Authentication::Constants::JWT_ISSUER', 'localhost.test')
+        stub_const('Authentication::Constants::JWT_ALGORITHM_HEADER', 'HS256')
+        stub_const('Authentication::Constants::JWT_TYP_HEADER', 'JWT')
+        allow(Authentication::Decoder).to receive(:new).and_return(jwt_decoder_service)
+        allow(Digest::UUID).to receive(:uuid_v4).and_return(jti)
+        travel_to(fixed_time)
+      end
+
+      it 'raises an Authentication::Authenticator::InvalidToken error' do
+        expect { authenticator.call }.to raise_error (Errors::Authentication::Authenticator::InvalidToken)
+      end
+    end
+
+    context "when token is blacklisted" do
+      let!(:user) { create(:user, id: 1) }
+      let(:fixed_time) { Time.new(1989, 06, 04) }
+      let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+      let(:exp) { Time.now().advance(hours: Authentication::Constants::EXPIRY_TIME_IN_HOURS) }
+      let(:iss) { 'localhost.test' }
+      let(:access_token) do
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+      end
+      let!(:blacklisted_token) do
+        create(:black_listed_token, user_id: user.id, jti:, exp:)
+      end
+      let(:decoded_token) do
+        Authentication::DecodedJwtAccessTokenCredentials.new(
+          sub: user.id,
+          iat: Time.now(),
+          jti:,
+          exp:,
+          iss:
+        )
+      end
+      let(:jwt_decoder_service) { instance_double(Authentication::Decoder, call: decoded_token) }
+
+      before do
+        stub_const('Authentication::Constants::EXPIRY_TIME_IN_HOURS', 12)
+        stub_const('Authentication::Constants::JWT_SECRET', 'secret')
+        stub_const('Authentication::Constants::JWT_ISSUER', iss)
+        stub_const('Authentication::Constants::JWT_ALGORITHM_HEADER', 'HS256')
+        stub_const('Authentication::Constants::JWT_TYP_HEADER', 'JWT')
+        allow(Authentication::Decoder).to receive(:new).and_return(jwt_decoder_service)
+        allow(Digest::UUID).to receive(:uuid_v4).and_return(jti)
+        travel_to(fixed_time)
+      end
+
+      it 'raises an Authentication::Authenticator::InvalidToken error' do
+        expect { authenticator.call }.to raise_error (Errors::Authentication::Authenticator::InvalidToken)
+      end
+    end
+
+    context "when token is not authentic" do
+      let!(:user) { create(:user, id: 1) }
+      let(:fixed_time) { Time.new(1989, 06, 04) }
+      let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+      let(:exp) { Time.now().advance(hours: Authentication::Constants::EXPIRY_TIME_IN_HOURS).to_i }
+      let(:invalid_iss) { 'any_other_invalid_issuer' }
+      let(:valid_iss) { 'localhost.test' }
+      let(:access_token) do
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoiaW52YWxpZF9pc3N1ZXIifQ.VpG8OGIu-M0OCi0kJe649v37DxRSMsxKsCgjlHVEg2s"
+      end
+      let(:decoded_token) do
+        Authentication::DecodedJwtAccessTokenCredentials.new(
+          sub: 1984,
+          iat: Time.now(),
+          iss: invalid_iss,
+          exp:,
+          jti:
+        )
+      end
+      let(:jwt_decoder_service) { instance_double(Authentication::Decoder, call: decoded_token) }
+
+      before do
+        stub_const('Authentication::Constants::EXPIRY_TIME_IN_HOURS', 12)
+        stub_const('Authentication::Constants::JWT_SECRET', 'secret')
+        stub_const('Authentication::Constants::JWT_ISSUER', valid_iss)
+        stub_const('Authentication::Constants::JWT_ALGORITHM_HEADER', 'HS256')
+        stub_const('Authentication::Constants::JWT_TYP_HEADER', 'JWT')
+        allow(Authentication::Decoder).to receive(:new).and_return(jwt_decoder_service)
+        allow(Digest::UUID).to receive(:uuid_v4).and_return(jti)
+        travel_to(fixed_time)
+      end
+
+      it 'raises an Authentication::Authenticator::InvalidToken error' do
+        expect { authenticator.call }.to raise_error (Errors::Authentication::Authenticator::InvalidToken)
+      end
+    end
+  end
+end

@@ -58,3 +58,6 @@ gem "redis", "~> 5.4"
 gem "jbuilder", "~> 2.13"
 gem "stripe", "~> 13.5"
 gem "faraday", "~> 2.12", ">= 2.12.2"
+gem 'jwt', '~> 2.10', '>= 2.10.1'
+gem "devise", "~> 4.9"
+gem 'dry-core', '~> 1.1'
