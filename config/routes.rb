@@ -9,6 +9,20 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  namespace :v1 do
+    post "/auth", to: "authentication#authenticate"
+    post "/refresh", to: "authentication#refresh_token"
+    post "/logout", to: "authentication#logout"
+
+    namespace :admin do
+      resource :users, only: %i[create]
+    end
+
+    namespace :users do
+      post "/verify/:token", to: "users#verify"
+    end
+  end
+
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   mount Sidekiq::Web => "/sidekiq"
 end
