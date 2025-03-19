@@ -1,0 +1,4 @@
+hello_test_job:
+  cron: "*/30 * * * *"
+  class: "HelloTestJob"
+  queue: default

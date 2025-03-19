@@ -6,18 +6,15 @@ gem "rails", "~> 8.0.2"
 gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache and Active Job
 gem "solid_cache"
-gem "solid_queue"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -43,4 +40,21 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "rspec-rails", "~> 7.0.0"
+  gem "dotenv", "~> 3.1", ">= 3.1.7"
+  gem "guard-rspec", "~> 4.7", ">= 4.7.3"
+  gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
 end
+
+group :test do
+  gem "shoulda-matchers", "~> 6.0"
+  gem "simplecov", "~> 0.22.0", require: false
+  gem "webmock", "~> 3.25", ">= 3.25.1"
+end
+
+gem "sidekiq", "~> 8.0"
+gem "sidekiq-cron", "~> 2.1"
+gem "redis", "~> 5.4"
+gem "jbuilder", "~> 2.13"
+gem "stripe", "~> 13.5"
+gem "faraday", "~> 2.12", ">= 2.12.2"
