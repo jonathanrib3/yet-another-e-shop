@@ -53,7 +53,7 @@ group :test do
 end
 
 gem "sidekiq", "~> 8.0"
-gem "sidekiq-cron", "~> 2.1"
+gem "sidekiq-cron", "~> 2.2"
 gem "redis", "~> 5.4"
 gem "jbuilder", "~> 2.13"
 gem "stripe", "~> 13.5"
