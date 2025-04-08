@@ -67,3 +67,9 @@ gem "stripe", "~> 13.5"
 gem "faraday", "~> 2.12", ">= 2.12.2"
 gem 'jwt', '~> 2.10', '>= 2.10.1'
 gem 'pundit', '~> 2.5'
+
+gem "carmen", "~> 1.1"
+
+gem "city-state", "~> 1.1"
+
+gem "connection_pool", "~> 2.5"

@@ -53,6 +53,9 @@ en:
         authenticator:
           invalid_token: "Invalid access token!"
           invalid_user: "Invalid user!"
+      stripe:
+        find_or_create_idempotency_key:
+          invalid_operation: "Invalid operation - must be 'create', 'update' or 'delete'"
     messages:
       invalid_login: "User doesn't exist or password doesn't match!"
       invalid_refresh_token: "Invalid refresh token!"

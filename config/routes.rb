@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     namespace :users do
       post "/verify/:token", to: "users#verify"
     end
+
+    resources :customers, only: [ :create ]
   end
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
