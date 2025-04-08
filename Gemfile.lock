@@ -85,6 +85,8 @@ GEM
     brakeman (7.0.0)
       racc
     builder (3.3.0)
+    childprocess (5.1.0)
+      logger (~> 1.5)
     coderay (1.1.3)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.0)
@@ -160,6 +162,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.10.2)
+    jwt (2.10.1)
+      base64
     kamal (2.5.3)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -172,6 +176,17 @@ GEM
       thor (~> 1.3)
       zeitwerk (>= 2.6.18, < 3.0)
     language_server-protocol (3.17.0.4)
+    launchy (3.1.1)
+      addressable (~> 2.8)
+      childprocess (~> 5.0)
+      logger (~> 1.6)
+    letter_opener (1.10.0)
+      launchy (>= 2.2, < 4)
+    letter_opener_web (3.0.0)
+      actionmailer (>= 6.1)
+      letter_opener (~> 1.9)
+      railties (>= 6.1)
+      rexml
     lint_roller (1.1.0)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -246,6 +261,8 @@ GEM
     public_suffix (6.0.1)
     puma (6.6.0)
       nio4r (~> 2.0)
+    pundit (2.5.0)
+      activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.12)
@@ -429,9 +446,13 @@ DEPENDENCIES
   faraday (~> 2.12, >= 2.12.2)
   guard-rspec (~> 4.7, >= 4.7.3)
   jbuilder (~> 2.13)
+  jwt (~> 2.10, >= 2.10.1)
   kamal
+  letter_opener (~> 1.10)
+  letter_opener_web (~> 3.0)
   pg (~> 1.1)
   puma (>= 5.0)
+  pundit (~> 2.5)
   rails (~> 8.0.2)
   redis (~> 5.4)
   rspec-rails (~> 7.0.0)
@@ -445,6 +466,9 @@ DEPENDENCIES
   thruster
   tzinfo-data
   webmock (~> 3.25, >= 3.25.1)
+
+RUBY VERSION
+   ruby 3.4.2p28
 
 BUNDLED WITH
    2.6.2

@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby "3.4.2"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"
 # Use postgresql as the database for Active Record
@@ -46,6 +48,11 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
 end
 
+group :development do
+  gem 'letter_opener', '~> 1.10'
+  gem 'letter_opener_web', '~> 3.0'
+end
+
 group :test do
   gem "shoulda-matchers", "~> 6.0"
   gem "simplecov", "~> 0.22.0", require: false
@@ -58,3 +65,5 @@ gem "redis", "~> 5.4"
 gem "jbuilder", "~> 2.13"
 gem "stripe", "~> 13.5"
 gem "faraday", "~> 2.12", ">= 2.12.2"
+gem 'jwt', '~> 2.10', '>= 2.10.1'
+gem 'pundit', '~> 2.5'
