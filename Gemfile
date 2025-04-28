@@ -47,7 +47,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "shoulda-matchers", "~> 6.0"
+  gem "shoulda-matchers", "~> 6.5"
   gem "simplecov", "~> 0.22.0", require: false
   gem "webmock", "~> 3.25", ">= 3.25.1"
 end
