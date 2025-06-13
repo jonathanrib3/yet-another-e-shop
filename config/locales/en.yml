@@ -53,8 +53,21 @@ en:
         authenticator:
           invalid_token: "Invalid access token!"
           invalid_user: "Invalid user!"
+      stripe:
+        find_or_create_idempotency_key:
+          invalid_operation: "Invalid operation - must be 'create', 'update' or 'delete'"
     messages:
       invalid_login: "User doesn't exist or password doesn't match!"
       invalid_refresh_token: "Invalid refresh token!"
       invalid_access_token: "Invalid access token!"
       invalid_confirmation_token: "Invalid confirmation token!"
+    users:
+      password:
+        reset_request_email_not_found: "Couldn't find user with requested email"
+        reset_request_token_not_found: "Couldn't find reset password token"
+        cannot_reset_password_before_due_expiration: "Cannot request another password reset for the next 10 minutes"
+        cannot_cancel_expired_reset_request: "Cannot cancel an expired password reset request"
+        reset_password_token_expired: "Reset password token expired!"
+  users:
+    password:
+      reset_request_success: "Password reset instructions have been sent to your email."

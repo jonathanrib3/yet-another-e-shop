@@ -1,0 +1,7 @@
+en:
+  errors:
+    address:
+      attributes:
+        user_id:
+          duplicate_residential_address: "Cannot have more than one residential address!"
+          duplicate_billing_address: "Cannot have more than one billing address!"
