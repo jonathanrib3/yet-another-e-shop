@@ -24,8 +24,16 @@ Rails.application.routes.draw do
     end
 
     namespace :users do
-      post '/verify/:token', to: 'users#verify'
+      post 'verify/:token', to: 'verifications#create', as: :verify
+
+      scope :passwords do
+        patch '/', to: 'passwords#update', as: :password_update
+        post '/reset', to: 'passwords#reset', as: :password_reset
+        delete '/reset/:token/cancel', to: 'passwords#cancel', as: :password_reset_cancel
+      end
     end
+
+    resources :customers, only: [ :create, :update, :destroy, :show ]
   end
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
