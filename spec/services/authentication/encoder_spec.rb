@@ -42,4 +42,13 @@ RSpec.describe Authentication::Encoder, type: :service do
       expect { auth_encoder.call }.to raise_error(Errors::Authentication::Encoder::InvalidUser)
     end
   end
+
+  context 'when encoding a JWT with invalid credentials' do
+    let(:user) { nil }
+    let(:jti_registry) { create(:jti_registry) }
+
+    it 'raises an Authentication::Encoder::InvalidUserError' do
+      expect { auth_encoder.call }.to raise_error(Errors::Authentication::Encoder::InvalidUser)
+    end
+  end
 end
