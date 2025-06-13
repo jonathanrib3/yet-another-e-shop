@@ -2,7 +2,6 @@ module Authenticator
   extend ActiveSupport::Concern
 
   included do
-    rescue_from Errors::Authentication::InvalidRefreshToken, with: :invalid_refresh_token
     rescue_from Errors::Authentication::InvalidAccessToken, with: :invalid_access_token
     rescue_from NoMatchingPatternError, with: :invalid_access_token
   end
@@ -39,11 +38,6 @@ module Authenticator
   def set_jti_registry
     @jti_registry ||= JtiRegistry.includes(:user, :black_listed_token)
       .find_by!(jti: decoded_token.jti, user_id: decoded_token.sub)
-  end
-
-  def invalid_refresh_token(exception)
-    @message = exception.message
-    render template: "v1/error/error", status: :unauthorized
   end
 
   def invalid_access_token(exception)
