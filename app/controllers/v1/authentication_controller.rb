@@ -3,6 +3,7 @@ module V1
     include Authenticator
     rescue_from Errors::Authentication::Login::InvalidEmailOrPassword, with: :invalid_login
     rescue_from Errors::Authentication::Revoker::TokenAlreadyBlackListed, with: :handle_token_already_black_listed
+    rescue_from Errors::Authentication::InvalidRefreshToken, with: :invalid_refresh_token
 
     def authenticate
       @credentials = Authentication::Login.new(email: user_params["email"], password: user_params["password"]).call
@@ -41,6 +42,11 @@ module V1
     def handle_token_already_black_listed
       @message = I18n.t("errors.services.authentication.revoker.token_already_black_listed")
       render template: "v1/error/error", status: :unprocessable_entity
+    end
+
+    def invalid_refresh_token(exception)
+      @message = exception.message
+      render template: "v1/error/error", status: :unauthorized
     end
   end
 end
