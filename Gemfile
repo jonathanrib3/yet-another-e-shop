@@ -51,7 +51,8 @@ end
 group :development do
   gem 'letter_opener', '~> 1.10'
   gem 'letter_opener_web', '~> 3.0'
-end
+  gem 'bullet', '~> 8.0', '>= 8.0.8'
+end 
 
 group :test do
   gem "shoulda-matchers", "~> 6.0"
@@ -67,3 +68,7 @@ gem "stripe", "~> 13.5"
 gem "faraday", "~> 2.12", ">= 2.12.2"
 gem 'jwt', '~> 2.10', '>= 2.10.1'
 gem 'pundit', '~> 2.5'
+
+gem "connection_pool", "~> 2.5"
+
+gem "faker", "~> 3.5"
