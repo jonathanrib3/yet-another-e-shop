@@ -36,7 +36,8 @@ end
 group :development do
   gem 'letter_opener', '~> 1.10'
   gem 'letter_opener_web', '~> 3.0'
-end
+  gem 'bullet', '~> 8.0', '>= 8.0.8'
+end 
 
 group :test do
   gem 'shoulda-matchers', '~> 6.0'
