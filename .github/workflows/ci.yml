@@ -4,32 +4,57 @@ on:
   pull_request:
   push:
     branches: [ main ]
-
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: docker
+          POSTGRES_PASSWORD: docker123
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      RAILS_ENV: test
+      CI: true
+      DATABASE_HOST: localhost
+      DATABASE_USER: docker
+      DATABASE_PASSWORD: docker123
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
-      - name: Install dependencies
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Install native dependencies
+        run: sudo apt-get install --no-install-recommends -y libjemalloc2 libvips postgresql-client
+      - name: Install bundler's dependencies
         run: bundle install
+      - name: Setup test database
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
       - name: Run tests suite
         run: bundle exec rspec
 
