@@ -43,7 +43,7 @@ module Authentication
     end
 
     def iat
-      @iat ||= Time.current.to_i
+      @iat ||= Time.current.utc.to_i
     end
 
     def iss

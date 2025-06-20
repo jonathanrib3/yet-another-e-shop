@@ -45,7 +45,7 @@ module Authentication
     end
 
     def exp
-      Time.current.advance(days: Constants::REFRESH_TOKEN_EXPIRY_TIME_IN_DAYS)
+      Time.current.utc.advance(days: Constants::REFRESH_TOKEN_EXPIRY_TIME_IN_DAYS)
     end
 
     def crypted_token
