@@ -122,7 +122,7 @@ RSpec.describe "V1::Authentications", type: :request do
       let(:raw_refresh_token) { "e74eac93371c09d89593d0fd17d1d4258acd4642145ed317437fb6f27b4c777b" }
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
       let!(:jti_registry) { create(:jti_registry, jti:, user:) }
-      let(:exp) { Time.now.advance(days: refresh_token_expiry_days) }
+      let(:exp) { fixed_time.advance(days: refresh_token_expiry_days) }
       let!(:refresh_token) do
         create(:refresh_token,
           crypted_token: Digest::SHA256.hexdigest(raw_refresh_token + secret),
@@ -163,7 +163,7 @@ RSpec.describe "V1::Authentications", type: :request do
       end
       let(:raw_refresh_token) { "e74eac93371c09d89593d0fd17d1d4258acd4642145ed317437fb6f27b4c777b" }
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
-      let(:exp) { Time.now.advance(days: refresh_token_expiry_days) }
+      let(:exp) { fixed_time.advance(days: refresh_token_expiry_days) }
       let(:params) do
         {
           refresh_token: raw_refresh_token
@@ -227,7 +227,7 @@ RSpec.describe "V1::Authentications", type: :request do
       end
       let(:jti)  { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
       let(:jti_registry) { create(:jti_registry, jti:, user:) }
-      let(:exp) { Time.now.advance(days: refresh_token_expiry_days) }
+      let(:exp) { fixed_time.advance(days: refresh_token_expiry_days) }
       let!(:refresh_token) do
         create(:refresh_token, exp:, jti_registry:)
       end
@@ -263,7 +263,7 @@ RSpec.describe "V1::Authentications", type: :request do
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE0OSwianRpIjoiOGVhZmQ1ZTItODViNC00NDMyLThmMzktMGY1ZGU2MTAwMWZhIiwiaWF0Ijo2MTI5MzI0MDAsImV4cCI6NjEyOTc1NjAwLCJpc3MiOiJsb2NhbGhvc3QudGVzdCJ9.n6-H9XhWn8V3Br3J64dBvp4Qh7vQWtzTw1f179dc4SY"
       end
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
-      let(:exp) { Time.now.advance(days: refresh_token_expiry_days) }
+      let(:exp) { fixed_time.advance(days: refresh_token_expiry_days) }
       let(:headers) do
         {
           "Authorization" => "Bearer #{access_token}"
@@ -302,7 +302,7 @@ RSpec.describe "V1::Authentications", type: :request do
     context "when logging out from an account, given an invalid access token" do
       let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
       let(:user) { create(:user, id: 1) }
-      let(:exp) { Time.now.advance(days: refresh_token_expiry_days) }
+      let(:exp) { fixed_time.advance(days: refresh_token_expiry_days) }
       let(:headers) do
         {
           "Authorization" => "invalid auth format"
@@ -341,7 +341,7 @@ RSpec.describe "V1::Authentications", type: :request do
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
       end
       let(:jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
-      let(:exp) { Time.now.advance(days: refresh_token_expiry_days) }
+      let(:exp) { fixed_time.advance(days: refresh_token_expiry_days) }
       let!(:black_listed_token) do
         create(:black_listed_token, jti_registry:)
       end

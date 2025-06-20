@@ -16,7 +16,7 @@ module Authentication
     private
 
     def validate_token_expiration_date
-      raise Errors::Authentication::InvalidRefreshToken if Time.now > found_refresh_token.exp
+      raise Errors::Authentication::InvalidRefreshToken if Time.current > found_refresh_token.exp
     end
 
     def found_refresh_token

@@ -31,9 +31,9 @@ RSpec.describe "V1::Admin::TokensController", type: :request do
         {
           jti: jti_registry_to_be_blacklisted.jti,
           user_id: user_with_blacklisted_token.id,
-          exp: Time.now.advance(hours: expiry_hours).utc.as_json,
-          created_at: Time.now.utc.as_json,
-          updated_at: Time.now.utc.as_json
+          exp: fixed_time.advance(hours: expiry_hours).utc.as_json,
+          created_at: fixed_time.utc.as_json,
+          updated_at: fixed_time.utc.as_json
         }
       end
 
@@ -165,9 +165,9 @@ RSpec.describe "V1::Admin::TokensController", type: :request do
         {
           jti: jti_to_be_blacklisted,
           user_id: user_with_blacklisted_token.id,
-          exp: Time.now.as_json,
-          created_at: Time.now.as_json,
-          updated_at: Time.now.as_json
+          exp: fixed_time.as_json,
+          created_at: fixed_time.as_json,
+          updated_at: fixed_time.as_json
         }
       end
 

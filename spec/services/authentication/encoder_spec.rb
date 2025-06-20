@@ -11,7 +11,7 @@ RSpec.describe Authentication::Encoder, type: :service do
     let(:expected_access_token) do
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
     end
-    let(:expected_exp) { Time.now().advance(hours: expiry_hours).to_i }
+    let(:expected_exp) { fixed_time.advance(hours: expiry_hours).to_i }
 
     before do
       allow(Digest::UUID).to receive(:uuid_v4).and_return(jti_registry.jti)

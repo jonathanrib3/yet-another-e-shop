@@ -100,7 +100,7 @@ RSpec.describe User, type: :model do
 
   context '#confirmed?' do
     context 'when user has confirmed_at' do
-      let(:user) { build(:user, confirmed_at: Time.now()) }
+      let(:user) { build(:user, confirmed_at: Time.current()) }
 
       it 'is returns true' do
         expect(user.confirmed?).to be true

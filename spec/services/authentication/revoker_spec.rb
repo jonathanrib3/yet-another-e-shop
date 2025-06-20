@@ -6,11 +6,11 @@ RSpec.describe Authentication::Revoker, type: :service do
   subject(:auth_revoker) { described_class.new(jti:) }
 
   context "when revoking an access token, given a valid jti" do
-    let(:exp_time) { Time.now().advance(hours: expiry_hours) }
+    let(:exp_time) { fixed_time.advance(hours: expiry_hours) }
     let(:user) { create(:user, id: 1) }
     let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
     let!(:jti_registry) { create(:jti_registry, jti:, user:) }
-    let(:iat) { Time.now().to_i }
+    let(:iat) { fixed_time.to_i }
     let(:iss) { jwt_issuer }
     let(:decoded_token) do
       Authentication::DecodedJwtAccessTokenCredentials.new(
@@ -46,9 +46,9 @@ RSpec.describe Authentication::Revoker, type: :service do
   end
 
   context "when revoking an access token, with an invalid jit inside jwt" do
-    let(:exp_time) { Time.now().advance(hours: expiry_hours) }
+    let(:exp_time) { fixed_time.advance(hours: expiry_hours) }
     let(:user) { create(:user, id: 1) }
-    let(:iat) { Time.now().to_i }
+    let(:iat) { fixed_time.to_i }
     let(:jti) { "invalid jti" }
     let(:iss) { jwt_issuer }
     let(:decoded_token) do
@@ -68,10 +68,10 @@ RSpec.describe Authentication::Revoker, type: :service do
 
   context "when revoking an access token that's already revoked" do
     let(:fixed_time) { Time.new(1989, 06, 04) }
-    let(:exp_time) { Time.now().advance(hours: expiry_hours) }
+    let(:exp_time) { fixed_time.advance(hours: expiry_hours) }
     let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
     let(:jti_registry) { create(:jti_registry, jti:, user:) }
-    let(:iat) { Time.now().to_i }
+    let(:iat) { fixed_time.to_i }
     let(:iss) { jwt_issuer }
     let(:user) { create(:user, id: 1) }
     let(:decoded_token) do

@@ -80,7 +80,7 @@ RSpec.describe ::Authenticator, type: :request do
       let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
       let!(:user) { create(:user, id: 1) }
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
-      let(:exp) { Time.now().advance(hours: expiry_hours) }
+      let(:exp) { fixed_time.advance(hours: expiry_hours) }
       let(:iss) { jwt_issuer }
       let(:invalid_access_token) do
         "eyJ0eXAiOiJKV1Qinvalidformat"
@@ -148,14 +148,13 @@ RSpec.describe ::Authenticator, type: :request do
   end
 
   context "when token has a valid jti but an invalid user" do
-    
   end
 
   context 'when authenticating an user with a blacklisted token' do
     let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
     let!(:user) { create(:user, id: 1) }
     let!(:jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
-    let(:exp) { Time.now().advance(hours: expiry_hours) }
+    let(:exp) { fixed_time.advance(hours: expiry_hours) }
     let(:iss) { jwt_issuer }
     let!(:blacklisted_token) do
       create(:black_listed_token, jti_registry:)

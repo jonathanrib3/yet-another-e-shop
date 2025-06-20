@@ -33,7 +33,7 @@ module Authentication
     end
 
     def exp
-      @exp ||= Time.now.advance(hours: Authentication::Constants::EXPIRY_TIME_IN_HOURS)
+      @exp ||= Time.current.advance(hours: Authentication::Constants::EXPIRY_TIME_IN_HOURS)
     end
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe Authentication::Issuer, type: :service do
   subject(:auth_issuer) { described_class.new(user:) }
 
   context "when issuing jwt credentials, given an user" do
-    let(:expected_exp) { Time.now().advance(hours: expiry_hours).to_i }
+    let(:expected_exp) { fixed_time.advance(hours: expiry_hours).to_i }
     let(:user) { create(:user, id: 1) }
     let(:expected_jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
     let(:expected_access_token) do
@@ -42,7 +42,7 @@ RSpec.describe Authentication::Issuer, type: :service do
   end
 
   context "when issuing jwt credentials, given an user, being that a refresh token has already been issued" do
-    let(:expected_exp) { Time.now().advance(hours: expiry_hours).to_i }
+    let(:expected_exp) { fixed_time.advance(hours: expiry_hours).to_i }
     let(:user) { create(:user, id: 1) }
     let(:expected_jti) { "b98d42ac-6539-40f3-86e8-abc4e64d442a" }
     let(:refresh_token_jti) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }

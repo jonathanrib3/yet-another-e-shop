@@ -6,7 +6,7 @@ RSpec.describe Authentication::Refresher, type: :service do
   subject(:auth_refresher) { described_class.new(refresh_token:) }
 
   context "when refreshing an access token with a valid refresh token" do
-    let(:expected_exp) { Time.now().advance(hours: expiry_hours).to_i }
+    let(:expected_exp) { fixed_time.advance(hours: expiry_hours).to_i }
     let(:user) { create(:user, id: 1) }
     let(:refresh_token_jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
     let(:new_access_token_jti) { "c9a59b52-6257-4c87-a577-a489bd1ece98" }
@@ -50,7 +50,7 @@ RSpec.describe Authentication::Refresher, type: :service do
   end
 
   context "when refreshing an access token with an expired refresh token" do
-    let(:exp) { Time.now().advance(hours: expiry_hours).to_i }
+    let(:exp) { fixed_time.advance(hours: expiry_hours).to_i }
     let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
     let(:refresh_token) do
       "56e7eb8f326fbe336aa768a8ed3c298d06c027f48ce4439c9d484146f4d59e2b"

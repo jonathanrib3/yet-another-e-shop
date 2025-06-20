@@ -8,7 +8,7 @@ RSpec.describe Authentication::Authenticator, type: :service do
   context "when authenticating a valid token" do
     let!(:user) { create(:user, id: 1) }
     let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
-    let(:exp) { Time.now().advance(hours: expiry_hours) }
+    let(:exp) { fixed_time.advance(hours: expiry_hours) }
     let(:iss) { 'localhost.test' }
     let(:access_token) do
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
@@ -16,7 +16,7 @@ RSpec.describe Authentication::Authenticator, type: :service do
     let(:decoded_token) do
       Authentication::DecodedJwtAccessTokenCredentials.new(
         sub: user.id,
-        iat: Time.now(),
+        iat: fixed_time,
         exp:,
         jti:,
         iss:
@@ -39,14 +39,14 @@ RSpec.describe Authentication::Authenticator, type: :service do
       let!(:user) { create(:user, id: 1) }
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
       let(:iss) { jwt_issuer }
-      let(:exp) { Time.now().advance(hours: expiry_hours).to_i }
+      let(:exp) { fixed_time.advance(hours: expiry_hours).to_i }
       let(:access_token) do
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE5ODQsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.bwLymbjXzbALShUWSxDEZDHQhQnl0zqUlzrxm0dfCIQ"
       end
       let(:decoded_token) do
         Authentication::DecodedJwtAccessTokenCredentials.new(
           sub: 1984,
-          iat: Time.now(),
+          iat: fixed_time,
           exp:,
           jti:,
           iss:
@@ -67,7 +67,7 @@ RSpec.describe Authentication::Authenticator, type: :service do
     context "when token is blacklisted" do
       let!(:user) { create(:user, id: 1) }
       let(:jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
-      let(:exp) { Time.now().advance(hours: expiry_hours) }
+      let(:exp) { fixed_time.advance(hours: expiry_hours) }
       let(:iss) { jwt_issuer }
       let(:access_token) do
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
@@ -78,7 +78,7 @@ RSpec.describe Authentication::Authenticator, type: :service do
       let(:decoded_token) do
         Authentication::DecodedJwtAccessTokenCredentials.new(
           sub: user.id,
-          iat: Time.now(),
+          iat: fixed_time,
           jti: jti_registry.jti,
           exp:,
           iss:
@@ -98,7 +98,7 @@ RSpec.describe Authentication::Authenticator, type: :service do
     context "when token is not authentic" do
       let!(:user) { create(:user, id: 1) }
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
-      let(:exp) { Time.now().advance(hours: expiry_hours).to_i }
+      let(:exp) { fixed_time.advance(hours: expiry_hours).to_i }
       let(:invalid_iss) { 'any_other_invalid_issuer' }
       let(:valid_iss) { jwt_issuer }
       let(:access_token) do
@@ -107,7 +107,7 @@ RSpec.describe Authentication::Authenticator, type: :service do
       let(:decoded_token) do
         Authentication::DecodedJwtAccessTokenCredentials.new(
           sub: 1984,
-          iat: Time.now(),
+          iat: fixed_time,
           iss: invalid_iss,
           exp:,
           jti:

@@ -8,7 +8,7 @@ RSpec.describe Authentication::Login, type: :service do
   context "when logging in with valid email and password" do
     let!(:user) { create(:user, id: 1) }
     let(:jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
-    let(:exp) { Time.now().advance(hours: expiry_hours) }
+    let(:exp) { fixed_time.advance(hours: expiry_hours) }
     let(:iss) { jwt_issuer }
     let(:access_token) do
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
