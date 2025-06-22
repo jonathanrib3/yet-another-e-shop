@@ -11,7 +11,7 @@ RSpec.describe Authentication::Login, type: :service do
     let(:exp) { fixed_time.advance(hours: expiry_hours) }
     let(:iss) { jwt_issuer }
     let(:access_token) do
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
     end
     let(:refresh_token) { "574b49a8987bdedfe6e7bedc64f3da5d161eef1ec99dd1d334a4034fb8d3fbe6" }
     let(:encoded_token) do

@@ -8,7 +8,7 @@ RSpec.describe "V1::Authentications", type: :request do
       let(:user) { create(:user, id: 1) }
       let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
       let(:expected_access_token) do
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
       end
       let(:expected_refresh_token) { "e74eac93371c09d89593d0fd17d1d4258acd4642145ed317437fb6f27b4c777b" }
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
@@ -117,7 +117,7 @@ RSpec.describe "V1::Authentications", type: :request do
       let(:user) { create(:user, id: 1) }
       let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
       let(:expected_new_access_token) do
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
       end
       let(:raw_refresh_token) { "e74eac93371c09d89593d0fd17d1d4258acd4642145ed317437fb6f27b4c777b" }
       let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
@@ -156,7 +156,6 @@ RSpec.describe "V1::Authentications", type: :request do
 
     context "when getting a new access token through refresh token that doesn't exist" do
       let(:user) { create(:user, id: 1) }
-      let(:fixed_time) { Time.new(1989, 06, 04) }
       let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
       let(:expected_new_access_token) do
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
@@ -223,7 +222,7 @@ RSpec.describe "V1::Authentications", type: :request do
     context "when logging out from an account, given a valid access token" do
       let(:user) { create(:user, id: 1) }
       let(:access_token) do
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
       end
       let(:jti)  { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
       let(:jti_registry) { create(:jti_registry, jti:, user:) }
@@ -338,7 +337,7 @@ RSpec.describe "V1::Authentications", type: :request do
       let(:user) { create(:user, id: 1) }
       let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
       let(:expected_new_access_token) do
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
       end
       let(:jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
       let(:exp) { fixed_time.advance(days: refresh_token_expiry_days) }

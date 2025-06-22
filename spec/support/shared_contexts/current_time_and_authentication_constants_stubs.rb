@@ -1,6 +1,6 @@
 RSpec.shared_context "current time and authentication constants stubs", shared_context: :metadata do
   include ActiveSupport::Testing::TimeHelpers
-  let(:fixed_time) { Time.new(1989, 06, 04).utc }
+  let(:fixed_time) { Time.zone.local(1989, 06, 04) }
   let(:expiry_hours) { 12 }
   let(:refresh_token_expiry_days) { 30 }
   let(:secret) { 'secret' }

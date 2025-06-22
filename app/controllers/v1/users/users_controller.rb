@@ -9,6 +9,9 @@ module V1
       def verify
         user = User.find_by!(confirmation_token: params[:token], confirmed_at: nil)
         authorize user
+        if Time.current > user.confirmation_token_expires_at
+          raise Errors::Users::Verify::InvalidConfirmationToken, I18n.t("errors.messages.invalid_confirmation_token")
+        end
         user.update!(confirmed_at: Time.current)
 
         head :no_content

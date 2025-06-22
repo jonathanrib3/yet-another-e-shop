@@ -10,7 +10,7 @@ RSpec.describe Authentication::Issuer, type: :service do
     let(:user) { create(:user, id: 1) }
     let(:expected_jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
     let(:expected_access_token) do
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
     end
     let(:expected_refresh_token) do
       "56e7eb8f326fbe336aa768a8ed3c298d06c027f48ce4439c9d484146f4d59e2b"
@@ -47,7 +47,7 @@ RSpec.describe Authentication::Issuer, type: :service do
     let(:expected_jti) { "b98d42ac-6539-40f3-86e8-abc4e64d442a" }
     let(:refresh_token_jti) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
     let(:expected_access_token) do
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6ImI5OGQ0MmFjLTY1MzktNDBmMy04NmU4LWFiYzRlNjRkNDQyYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.QJuXZdQ4ZF_bFjHxfk2RFcWyKr03g-P9s0KtHiaQVTQ"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6ImI5OGQ0MmFjLTY1MzktNDBmMy04NmU4LWFiYzRlNjRkNDQyYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.dhVvrCJF1mkzj5y3lxBEh-VMxS-FQv4zcQa5mLtENJc"
     end
     let(:expected_refresh_token) do
       "b0b25a091157beba0305d7f2e4310eb8c134ce441c9462edeb4e857f59412c1a"
