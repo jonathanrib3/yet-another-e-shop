@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe Stripe::CreateCustomer, type: :service do
   subject(:stripe_create_customer) { described_class.new(customer:, idempotency_key:) }
 
-  context "when creating customer data in Stripe and it is successful" do
+  context 'when creating customer data in Stripe and it is successful' do
     let(:idempotency_key) { Digest::UUID.uuid_v4 }
     let(:customer) { create(:customer, :with_addresses) }
-    let(:api_key) { "fakeapikey" }
+    let(:api_key) { 'fakeapikey' }
     let(:stripe_response_body) do
       {
-        id: "cus_randomarbitraryid",
+        id: 'cus_randomarbitraryid',
         name: "#{customer.first_name} #{customer.last_name}",
         email: customer.user.email,
         phone: customer.phone_number,
@@ -22,7 +22,7 @@ RSpec.describe Stripe::CreateCustomer, type: :service do
           state: customer.residential_address.state
         },
         balance: 0,
-        created: Time.now.to_i,
+        created: Time.current.to_i,
         currency: nil,
         default_source: nil,
         delinquent: false,
@@ -46,19 +46,21 @@ RSpec.describe Stripe::CreateCustomer, type: :service do
     end
 
     before do
-      stub_const("Stripe::Constants::API_KEY", api_key)
+      stub_const('Stripe::Constants::API_KEY', api_key)
       stub_request(:post, "#{Stripe::Constants::API_BASE_URL}/customers")
-      .with(
-        headers: {
-        "Authorization" =>"Bearer #{api_key}",
-        "Idempotency-Key" => idempotency_key
-      })
-      .to_return(
-        body: JSON.generate(stripe_response_body),
-        status: 200)
+        .with(
+          headers: {
+            'Authorization' => "Bearer #{api_key}",
+            'Idempotency-Key' => idempotency_key
+          }
+        )
+        .to_return(
+          body: JSON.generate(stripe_response_body),
+          status: 200
+        )
     end
 
-    it "returns the created customer id" do
+    it 'returns the created customer id' do
       expect(stripe_create_customer.call).to eq(
         {
           id: stripe_response_body[:id],

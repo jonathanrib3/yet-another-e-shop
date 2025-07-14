@@ -131,7 +131,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when reset_password_sent_at is present and is lower than the expiration date' do
-      let(:user) { build(:user, reset_password_sent_at: Time.now - 5.minutes) }
+      let(:user) { build(:user, reset_password_sent_at: Time.current - 5.minutes) }
 
       it 'returns false' do
         expect(user.reset_password_token_expired?).to be false
@@ -139,7 +139,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when reset_password_sent_at is present and is greater than the expiration date' do
-      let(:user) { build(:user, reset_password_sent_at: Time.now - 15.minutes) }
+      let(:user) { build(:user, reset_password_sent_at: Time.current - 15.minutes) }
 
       it 'returns true' do
         expect(user.reset_password_token_expired?).to be true

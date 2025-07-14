@@ -14,9 +14,15 @@ class User < ApplicationRecord
   has_many :black_listed_tokens, through: :jti_registries
 
   def reset_password_token_expired?
-    return false unless reset_password_sent_at.present?
+    return false if reset_password_sent_at.blank?
 
-    Time.now >= (reset_password_sent_at + User::RESET_PASSWORD_TOKEN_EXPIRATION_TIME)
+    Time.current >= (reset_password_sent_at + User::RESET_PASSWORD_TOKEN_EXPIRATION_TIME)
+  end
+
+  def confirmation_token_expired?
+    return false if confirmation_token_sent_at.blank?
+
+    Time.current >= (confirmation_token_sent_at + User::CONFIRMATION_TOKEN_EXPIRATION_TIME)
   end
 
   def confirmed?
