@@ -28,4 +28,33 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  pundit:
+    default: "You are not allowed to perform this action."
+  errors:
+    services:
+      create_user:
+        invalid_attributes: "Password, and e-mail are mandatory to create an user!"
+      authentication:
+        encoder:
+          invalid_user: "Must provide a valid user to encode JWT credentials!"
+        decoder:
+          blank_access_token: "Must provide an access token to decode JWT credentials!"
+          user_not_found: "Could not find user provided by token!"
+        issuer:
+          invalid_user: "Must provide a valid user to issue JWT credentials!"
+        refresher:
+          refresh_token_expired: "Refresh token expired!"
+          blank_refresh_token: "Must provide a refresh token to get a new access token!"
+          refresh_token_not_found: "Refresh token doesn't exist!"
+        revoker:
+          invalid_decoded_token: "Invalid decoded token!"
+          invalid_user: "Must provide a valid user to revoke JWT credentials!"
+          token_already_black_listed: "Token already revoked!"
+        authenticator:
+          invalid_token: "Invalid access token!"
+          invalid_user: "Invalid user!"
+    messages:
+      invalid_login: "User doesn't exist or password doesn't match!"
+      invalid_refresh_token: "Invalid refresh token!"
+      invalid_access_token: "Invalid access token!"
+      invalid_confirmation_token: "Invalid confirmation token!"
