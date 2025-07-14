@@ -4,16 +4,20 @@ module V1
       include Authenticator
 
       rescue_from Errors::Users::Verify::InvalidConfirmationToken, with: :invalid_confirmation_token
-      before_action :authenticate_user!, only: [ :create ]
+      before_action :authenticate_user!, only: [:create]
 
       def create
         user = User.find_by!(confirmation_token: params[:token], confirmed_at: nil)
         authorize user, policy_class: V1::Users::VerificationsPolicy
+        if Time.current > user.confirmation_token_expires_at
+          raise Errors::Users::Verify::InvalidConfirmationToken, I18n.t('errors.messages.invalid_confirmation_token')
+        end
+
         user.update!(confirmed_at: Time.current)
 
         head :no_content
       rescue ActiveRecord::RecordNotFound,
-              ActiveRecord::RecordInvalid
+             ActiveRecord::RecordInvalid
         raise Errors::Users::Verify::InvalidConfirmationToken
       end
 
@@ -22,7 +26,7 @@ module V1
       def invalid_confirmation_token(exception)
         @message = exception.message
 
-        render template: "v1/error/error", status: :unprocessable_entity
+        render template: 'v1/error/error', status: :unprocessable_entity
       end
     end
   end
