@@ -43,7 +43,7 @@ group :development, :test do
   gem "rspec-rails", "~> 7.0.0"
   gem "dotenv", "~> 3.1", ">= 3.1.7"
   gem "guard-rspec", "~> 4.7", ">= 4.7.3"
-  gem "factory_bot_rails", "~> 6.4", ">= 6.4.4"
+  gem "factory_bot_rails", "~> 6.5"
 end
 
 group :test do
