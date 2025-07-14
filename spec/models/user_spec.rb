@@ -120,4 +120,30 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  context '#reset_password_token_expired?' do
+    context 'when reset_password_sent_at is nil' do
+      let(:user) { build(:user, reset_password_sent_at: nil) }
+
+      it 'returns false' do
+        expect(user.reset_password_token_expired?).to be false
+      end
+    end
+
+    context 'when reset_password_sent_at is present and is lower than the expiration date' do
+      let(:user) { build(:user, reset_password_sent_at: Time.current - 5.minutes) }
+
+      it 'returns false' do
+        expect(user.reset_password_token_expired?).to be false
+      end
+    end
+
+    context 'when reset_password_sent_at is present and is greater than the expiration date' do
+      let(:user) { build(:user, reset_password_sent_at: Time.current - 15.minutes) }
+
+      it 'returns true' do
+        expect(user.reset_password_token_expired?).to be true
+      end
+    end
+  end
 end

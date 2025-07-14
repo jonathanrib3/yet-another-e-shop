@@ -17,7 +17,7 @@ RSpec.describe ::Authenticator, type: :request do
     reload_routes!
   end
 
-  context 'when authenticating an user with a valid token' do
+  context 'when authenticating an user with a valid access token' do
     let!(:user) { create(:user, id: 1) }
     let!(:jti_registry) { create(:jti_registry, jti: '8eafd5e2-85b4-4432-8f39-0f5de61001fa', user:) }
     let(:access_token) do
@@ -44,7 +44,7 @@ RSpec.describe ::Authenticator, type: :request do
     end
   end
 
-  context 'when authenticating an user with an invalid token' do
+  context 'when authenticating an user with an invalid access token' do
     context "when an access token is from an user that doesn't exist" do
       let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
       let!(:user) { create(:user, id: 1) }
@@ -117,7 +117,7 @@ RSpec.describe ::Authenticator, type: :request do
     end
   end
 
-  context 'when authenticating an user with a token that has a valid user but an invalid jti' do
+  context 'when authenticating an user with an access token that has a valid user but an invalid jti' do
     let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
     let!(:user) { create(:user, id: 1) }
     let(:invalid_access_token) do

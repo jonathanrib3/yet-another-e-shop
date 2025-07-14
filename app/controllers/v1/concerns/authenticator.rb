@@ -2,7 +2,6 @@ module Authenticator
   extend ActiveSupport::Concern
 
   included do
-    rescue_from Errors::Authentication::InvalidRefreshToken, with: :invalid_refresh_token
     rescue_from Errors::Authentication::InvalidAccessToken, with: :invalid_access_token
     rescue_from NoMatchingPatternError, with: :invalid_access_token
   end

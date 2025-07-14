@@ -14,11 +14,41 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_22_213605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "addresses", force: :cascade do |t|
+    t.string "line_1", null: false
+    t.string "line_2"
+    t.string "zip_code", null: false
+    t.string "city", null: false
+    t.string "state", null: false
+    t.string "country", null: false
+    t.integer "address_type", default: 0, null: false
+    t.bigint "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_addresses_on_customer_id"
+  end
+
   create_table "black_listed_tokens", force: :cascade do |t|
     t.datetime "exp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "jti", null: false
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "phone_number", null: false
+    t.string "document_number", null: false
+    t.integer "document_type", null: false
+    t.date "date_of_birth", null: false
+    t.string "stripe_customer_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_number"], name: "index_customers_on_document_number", unique: true
+    t.index ["stripe_customer_id"], name: "index_customers_on_stripe_customer_id", unique: true
+    t.index ["user_id"], name: "index_customers_on_user_id", unique: true
   end
 
   create_table "jti_registries", primary_key: "jti", id: :uuid, default: nil, force: :cascade do |t|
@@ -53,7 +83,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_22_213605) do
     t.index ["email"], name: "unique_emails", unique: true
   end
 
+  add_foreign_key "addresses", "customers"
   add_foreign_key "black_listed_tokens", "jti_registries", column: "jti", primary_key: "jti"
+  add_foreign_key "customers", "users"
   add_foreign_key "jti_registries", "users"
   add_foreign_key "refresh_tokens", "jti_registries", column: "jti", primary_key: "jti"
 end
