@@ -1,9 +1,5 @@
 module Errors
   module Authentication
-    class InvalidDecodedTokenCredentials < StandardError
-      def initialize(msg)
-        super(msg)
-      end
-    end
+    class InvalidDecodedTokenCredentials < StandardError; end
   end
 end

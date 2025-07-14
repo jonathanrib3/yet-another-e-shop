@@ -22,9 +22,9 @@ module Authentication
     def validate_black_listed_token
       black_listed_token = BlackListedToken.find_by(jti: decoded_token.jti)
 
-      if black_listed_token.present?
-        raise Errors::Authentication::InvalidAccessToken
-      end
+      return if black_listed_token.blank?
+
+      raise Errors::Authentication::InvalidAccessToken
     end
 
     def validate_issuer

@@ -1,17 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Authentication::Authenticator, type: :service do
-  include_context "current time and authentication constants stubs"
+  include_context 'current time and authentication constants stubs'
 
   subject(:authenticator) { described_class.new(access_token:) }
 
-  context "when authenticating a valid token" do
+  context 'when authenticating a valid token' do
     let!(:user) { create(:user, id: 1) }
-    let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+    let(:jti) { '8eafd5e2-85b4-4432-8f39-0f5de61001fa' }
     let(:exp) { fixed_time.advance(hours: expiry_hours) }
     let(:iss) { 'localhost.test' }
     let(:access_token) do
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM' \
+      '5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRl' \
+      'c3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g'
     end
     let(:decoded_token) do
       Authentication::DecodedJwtAccessTokenCredentials.new(
@@ -34,14 +36,16 @@ RSpec.describe Authentication::Authenticator, type: :service do
     end
   end
 
-  context "when authenticating an invalid token" do
-    context "when user does not exists" do
+  context 'when authenticating an invalid token' do
+    context 'when user does not exists' do
       let!(:user) { create(:user, id: 1) }
-      let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+      let(:jti) { '8eafd5e2-85b4-4432-8f39-0f5de61001fa' }
       let(:iss) { jwt_issuer }
       let(:exp) { fixed_time.advance(hours: expiry_hours).to_i }
       let(:access_token) do
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE5ODQsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.bwLymbjXzbALShUWSxDEZDHQhQnl0zqUlzrxm0dfCIQ"
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE5ODQsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04' \
+        'ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0' \
+        'LnRlc3QifQ.bwLymbjXzbALShUWSxDEZDHQhQnl0zqUlzrxm0dfCIQ'
       end
       let(:decoded_token) do
         Authentication::DecodedJwtAccessTokenCredentials.new(
@@ -60,17 +64,19 @@ RSpec.describe Authentication::Authenticator, type: :service do
       end
 
       it 'raises an Authentication::InvalidAccessToken error' do
-        expect { authenticator.call }.to raise_error (Errors::Authentication::InvalidAccessToken)
+        expect { authenticator.call }.to raise_error(Errors::Authentication::InvalidAccessToken)
       end
     end
 
-    context "when token is blacklisted" do
+    context 'when token is blacklisted' do
       let!(:user) { create(:user, id: 1) }
-      let(:jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
+      let(:jti_registry) { create(:jti_registry, jti: '8eafd5e2-85b4-4432-8f39-0f5de61001fa', user:) }
       let(:exp) { fixed_time.advance(hours: expiry_hours) }
       let(:iss) { jwt_issuer }
       let(:access_token) do
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g"
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM' \
+        '5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoibG9jYWxob3N0LnRl' \
+        'c3QifQ.Msooi3vCIgSs_y6mQFiEuMtp47F_vb3NkCpeU4jso3g'
       end
       let!(:blacklisted_token) do
         create(:black_listed_token, jti_registry:, exp:)
@@ -91,18 +97,20 @@ RSpec.describe Authentication::Authenticator, type: :service do
       end
 
       it 'raises an Authentication::InvalidAccessToken error' do
-        expect { authenticator.call }.to raise_error (Errors::Authentication::InvalidAccessToken)
+        expect { authenticator.call }.to raise_error(Errors::Authentication::InvalidAccessToken)
       end
     end
 
-    context "when token is not authentic" do
+    context 'when token is not authentic' do
       let!(:user) { create(:user, id: 1) }
-      let(:jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+      let(:jti) { '8eafd5e2-85b4-4432-8f39-0f5de61001fa' }
       let(:exp) { fixed_time.advance(hours: expiry_hours).to_i }
       let(:invalid_iss) { 'any_other_invalid_issuer' }
       let(:valid_iss) { jwt_issuer }
       let(:access_token) do
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoiaW52YWxpZF9pc3N1ZXIifQ.VpG8OGIu-M0OCi0kJe649v37DxRSMsxKsCgjlHVEg2s"
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM' \
+        '5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTMyNDAwLCJleHAiOjYxMjk3NTYwMCwiaXNzIjoiaW52YWxpZF9pc3N1' \
+        'ZXIifQ.VpG8OGIu-M0OCi0kJe649v37DxRSMsxKsCgjlHVEg2s'
       end
       let(:decoded_token) do
         Authentication::DecodedJwtAccessTokenCredentials.new(
@@ -121,7 +129,7 @@ RSpec.describe Authentication::Authenticator, type: :service do
       end
 
       it 'raises an Authentication::InvalidAccessToken error' do
-        expect { authenticator.call }.to raise_error (Errors::Authentication::InvalidAccessToken)
+        expect { authenticator.call }.to raise_error(Errors::Authentication::InvalidAccessToken)
       end
     end
   end

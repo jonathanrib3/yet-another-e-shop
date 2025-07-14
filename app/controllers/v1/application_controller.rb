@@ -12,15 +12,15 @@ module V1
     end
 
     def user_not_authorized
-      @message = I18n.t("pundit.default")
+      @message = I18n.t('pundit.default')
 
-      render template: "v1/error/error", status: :forbidden
+      render template: 'v1/error/error', status: :forbidden
     end
 
     def record_invalid(exception)
-      @message = exception.message.gsub("Validation failed: ", "")
+      @message = exception.message.gsub('Validation failed: ', '')
 
-      render template: "v1/error/error", status: :unprocessable_entity
+      render template: 'v1/error/error', status: :unprocessable_entity
     end
   end
 end

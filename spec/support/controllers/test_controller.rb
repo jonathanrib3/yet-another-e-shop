@@ -9,7 +9,7 @@ class TestController < ActionController::API
   private
 
   def default_render
-    render json: { hello: "world" }, status: 200
+    render json: { hello: 'world' }, status: :ok
   end
 
   def set_default_format

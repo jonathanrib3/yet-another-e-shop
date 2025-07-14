@@ -1,16 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Authentication::Decoder, type: :service do
-  include_context "current time and authentication constants stubs"
+  include_context 'current time and authentication constants stubs'
 
   subject(:auth_decoder) { described_class.new(access_token:) }
 
-  context "when decoding a valid access token" do
+  context 'when decoding a valid access token' do
     let!(:user) { create(:user, id: 1) }
-    let(:expected_jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+    let(:expected_jti) { '8eafd5e2-85b4-4432-8f39-0f5de61001fa' }
     let(:expected_exp) { fixed_time.advance(hours: expiry_hours).to_i }
     let(:access_token) do
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM' \
+      '5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRl' \
+      'c3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA'
     end
 
     before do
@@ -47,10 +49,12 @@ RSpec.describe Authentication::Decoder, type: :service do
   end
 
   context "when decoding an access token that contains an id from a user that doesn't exist" do
-    let(:expected_jti) { "8eafd5e2-85b4-4432-8f39-0f5de61001fa" }
+    let(:expected_jti) { '8eafd5e2-85b4-4432-8f39-0f5de61001fa' }
     let(:expected_exp) { fixed_time.advance(hours: expiry_hours).to_i }
     let(:access_token) do
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM' \
+      '5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRl' \
+      'c3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA'
     end
 
     before do

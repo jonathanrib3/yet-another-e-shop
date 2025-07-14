@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Authentication::Encoder, type: :service do
-  include_context "current time and authentication constants stubs"
+  include_context 'current time and authentication constants stubs'
 
   subject(:auth_encoder) { described_class.new(user:, jti_registry:) }
 
-  context "when encoding a JWT, given a created user" do
+  context 'when encoding a JWT, given a created user' do
     let(:user) { create(:user, id: 1) }
-    let(:jti_registry) { create(:jti_registry, jti: "8eafd5e2-85b4-4432-8f39-0f5de61001fa", user:) }
+    let(:jti_registry) { create(:jti_registry, jti: '8eafd5e2-85b4-4432-8f39-0f5de61001fa', user:) }
     let(:expected_access_token) do
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRlc3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA"
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImp0aSI6IjhlYWZkNWUyLTg1YjQtNDQzMi04ZjM' \
+      '5LTBmNWRlNjEwMDFmYSIsImlhdCI6NjEyOTIxNjAwLCJleHAiOjYxMjk2NDgwMCwiaXNzIjoibG9jYWxob3N0LnRl' \
+      'c3QifQ.Y9kcGTnttCslvIYn9mrW4YvWaF7Sbkb6eTT3I_lPPjA'
     end
     let(:expected_exp) { fixed_time.advance(hours: expiry_hours).to_i }
 

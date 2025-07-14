@@ -1,7 +1,7 @@
 class HelloTestJob
   include Sidekiq::Job
 
-  def perform(*args)
-    puts "hello?"
+  def perform(*_args)
+    puts 'hello?' # rubocop:disable Rails/Output
   end
 end

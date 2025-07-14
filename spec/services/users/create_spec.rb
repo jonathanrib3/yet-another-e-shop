@@ -25,7 +25,9 @@ RSpec.describe Users::Create, type: :service do
     end
 
     it 'raises a Users::CreateUser::InvalidAttributes with a message' do
-      expect { create_new_user_service.call }.to raise_error(Errors::Users::CreateUser::InvalidAttributes, expected_errors)
+      expect do
+        create_new_user_service.call
+      end.to raise_error(Errors::Users::CreateUser::InvalidAttributes, expected_errors)
     end
   end
 
@@ -34,7 +36,8 @@ RSpec.describe Users::Create, type: :service do
     let(:email) { '.johndoe@123.com' }
     let(:role) { :admin }
     let(:expected_errors) do
-      "Validation failed: Email #{I18n.t 'errors.attributes.email.invalid'}, Password #{I18n.t 'errors.attributes.password.invalid'}"
+      "Validation failed: Email #{I18n.t 'errors.attributes.email.invalid'}," \
+      " Password #{I18n.t 'errors.attributes.password.invalid'}"
     end
 
     it 'returns an ActiveRecord::RecordInvalid error with a message' do

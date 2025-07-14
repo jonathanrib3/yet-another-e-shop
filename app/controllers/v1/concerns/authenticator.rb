@@ -21,13 +21,13 @@ module Authenticator
   end
 
   def access_token
-    @access_token ||= (
-      matches = Authentication::Constants::JWT_ACCESS_TOKEN_RETRIEVAL_REGEX.match(request.headers["Authorization"])
+    @access_token ||= begin
+      matches = Authentication::Constants::JWT_ACCESS_TOKEN_RETRIEVAL_REGEX.match(request.headers['Authorization'])
 
       raise Errors::Authentication::InvalidAccessToken if matches.nil?
 
       matches[:access_token]
-    )
+    end
   end
 
   def decoded_token
@@ -38,16 +38,16 @@ module Authenticator
 
   def set_jti_registry
     @jti_registry ||= JtiRegistry.includes(:user, :black_listed_token)
-      .find_by!(jti: decoded_token.jti, user_id: decoded_token.sub)
+                                 .find_by!(jti: decoded_token.jti, user_id: decoded_token.sub)
   end
 
   def invalid_refresh_token(exception)
     @message = exception.message
-    render template: "v1/error/error", status: :unauthorized
+    render template: 'v1/error/error', status: :unauthorized
   end
 
   def invalid_access_token(exception)
     @message = exception.message
-    render template: "v1/error/error", status: :unauthorized
+    render template: 'v1/error/error', status: :unauthorized
   end
 end

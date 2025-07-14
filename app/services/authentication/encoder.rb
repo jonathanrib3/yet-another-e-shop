@@ -21,9 +21,7 @@ module Authentication
       )
       credentials = EncodedJwtAccessTokenCredentials.new(access_token:, jti:, exp:)
 
-      if credentials.invalid?
-        raise Errors::Authentication::InvalidEncodedTokenCredentials, credentials.errors.to_a
-      end
+      raise Errors::Authentication::InvalidEncodedTokenCredentials, credentials.errors.to_a if credentials.invalid?
 
       credentials
     end

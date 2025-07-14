@@ -8,13 +8,13 @@ module V1
         authorize :admin_user, :create?
 
         @admin = ::Users::Create.new(
-          email: admin_user_params["email"],
-          password: admin_user_params["password"],
+          email: admin_user_params['email'],
+          password: admin_user_params['password'],
           role: :admin
         ).call
         UserMailer.confirmation_email(@admin).deliver_later
 
-        render template: "v1/admin/users/create", status: :created
+        render template: 'v1/admin/users/create', status: :created
       end
 
       def update
@@ -22,10 +22,10 @@ module V1
 
         @admin = User.find(params[:id])
         if @admin.update(admin_user_params.to_h.deep_symbolize_keys)
-          render template: "v1/admin/users/update", status: :ok
+          render template: 'v1/admin/users/update', status: :ok
         else
-          @message =  @admin.errors.full_messages.join(", ")
-          render "v1/error/error", status: :unprocessable_entity
+          @message = @admin.errors.full_messages.join(', ')
+          render 'v1/error/error', status: :unprocessable_entity
         end
       end
 

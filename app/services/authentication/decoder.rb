@@ -8,17 +8,17 @@ module Authentication
     def call
       verify = true
       payload, _header = JWT.decode(@access_token, secret, verify, { verify_iss: true, iss: expected_issuer })
-      validate_decoded_user_id(payload["sub"])
+      validate_decoded_user_id(payload['sub'])
       credentials = Authentication::DecodedJwtAccessTokenCredentials.new(
-        sub: payload["sub"],
-        jti: payload["jti"],
-        exp: payload["exp"],
-        iat: payload["iat"],
-        iss: payload["iss"]
+        sub: payload['sub'],
+        jti: payload['jti'],
+        exp: payload['exp'],
+        iat: payload['iat'],
+        iss: payload['iss']
       )
 
       if credentials.invalid?
-        raise Errors::Authentication::InvalidDecodedTokenCredentials, credentials.errors.to_a.join(", ")
+        raise Errors::Authentication::InvalidDecodedTokenCredentials, credentials.errors.to_a.join(', ')
       end
 
       credentials

@@ -9,13 +9,13 @@ class CreateJtiRegistriesTable < ActiveRecord::Migration[8.0]
 
     add_index :jti_registries, :jti, unique: true
 
-    change_table :refresh_tokens do |t|
+    change_table :refresh_tokens, bulk: true do |t|
       t.remove :jti, type: :string
       t.column :jti, :uuid, null: false
       t.foreign_key :jti_registries, type: :uuid, column: :jti, primary_key: :jti
     end
 
-    change_table :black_listed_tokens do |t|
+    change_table :black_listed_tokens, bulk: true do |t|
       t.remove :jti, type: :string
       t.column :jti, :uuid, null: false
       t.foreign_key :jti_registries, type: :uuid, column: :jti, primary_key: :jti

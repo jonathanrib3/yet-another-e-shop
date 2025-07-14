@@ -9,9 +9,9 @@ module V1
       def black_list
         authorize :admin_user, :black_list?
 
-        @black_listed_token = Authentication::Revoker.new(jti: black_list_token_params["jti"]).call
+        @black_listed_token = Authentication::Revoker.new(jti: black_list_token_params['jti']).call
 
-        render template: "v1/admin/tokens/black_list", status: :ok
+        render template: 'v1/admin/tokens/black_list', status: :ok
       end
 
       private
@@ -21,8 +21,8 @@ module V1
       end
 
       def handle_token_already_black_listed
-        @message = I18n.t("errors.services.authentication.revoker.token_already_black_listed")
-        render template: "v1/error/error", status: :unprocessable_entity
+        @message = I18n.t('errors.services.authentication.revoker.token_already_black_listed')
+        render template: 'v1/error/error', status: :unprocessable_entity
       end
     end
   end

@@ -15,7 +15,8 @@ module Authentication
 
       EncodedJwtAccessAndRefreshTokenCredentials.new(
         access_token: access_token_credentials.access_token,
-        refresh_token: raw_refresh_token)
+        refresh_token: raw_refresh_token
+      )
     end
 
     private
@@ -36,7 +37,7 @@ module Authentication
     def jti_registry
       @jti_registry ||= JtiRegistry.create!(
         jti: Digest::UUID.uuid_v4,
-        user: @user,
+        user: @user
       )
     end
 
@@ -49,7 +50,7 @@ module Authentication
     end
 
     def crypted_token
-      Digest::SHA256.hexdigest(raw_refresh_token +  Constants::JWT_SECRET)
+      Digest::SHA256.hexdigest(raw_refresh_token + Constants::JWT_SECRET)
     end
   end
 end

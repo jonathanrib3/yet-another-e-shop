@@ -15,7 +15,8 @@ module Users
         password: @password,
         email: @email,
         role: @role,
-        confirmation_sent_at: Time.current())
+        confirmation_sent_at: Time.current
+      )
     end
 
     def validate_attributes_presence

@@ -3,7 +3,7 @@ module RoutesHelpers
     Rails.application.routes.disable_clear_and_finalize = true
 
     Rails.application.routes.draw do
-      scope "tests" do
+      scope 'tests' do
         instance_exec(&block)
       end
     end

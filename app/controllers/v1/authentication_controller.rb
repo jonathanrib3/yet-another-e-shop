@@ -5,7 +5,7 @@ module V1
     rescue_from Errors::Authentication::Revoker::TokenAlreadyBlackListed, with: :handle_token_already_black_listed
 
     def authenticate
-      @credentials = Authentication::Login.new(email: user_params["email"], password: user_params["password"]).call
+      @credentials = Authentication::Login.new(email: user_params['email'], password: user_params['password']).call
 
       render json: @credentials
     end
@@ -35,12 +35,12 @@ module V1
 
     def invalid_login(exception)
       @message = exception.message
-      render template: "v1/error/error", status: :unauthorized
+      render template: 'v1/error/error', status: :unauthorized
     end
 
     def handle_token_already_black_listed
-      @message = I18n.t("errors.services.authentication.revoker.token_already_black_listed")
-      render template: "v1/error/error", status: :unprocessable_entity
+      @message = I18n.t('errors.services.authentication.revoker.token_already_black_listed')
+      render template: 'v1/error/error', status: :unprocessable_entity
     end
   end
 end

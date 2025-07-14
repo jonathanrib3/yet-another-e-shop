@@ -6,9 +6,7 @@ module Authentication
     end
 
     def call
-      if user.authenticate(@password)
-        return Authentication::Issuer.new(user:).call
-      end
+      return Authentication::Issuer.new(user:).call if user.authenticate(@password)
 
       raise Errors::Authentication::Login::InvalidEmailOrPassword
     end

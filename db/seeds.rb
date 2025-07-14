@@ -10,17 +10,17 @@
 4.times do |index|
   User.create!(
     email: "customer_#{index}@mail.com",
-    password: "123123Qwe.",
+    password: '123123Qwe.',
     confirmation_token: Tokens.generate_random_token,
-    confirmation_sent_at: Time.current(),
-    confirmed_at: Time.current()
+    confirmation_sent_at: Time.current,
+    confirmed_at: Time.current
   )
 end
 
 User.create!(
-  email: "admin@mail.com",
-  password: "123123Qwe.",
+  email: 'admin@mail.com',
+  password: '123123Qwe.',
   role: :admin,
-  confirmation_sent_at: Time.current(),
-  confirmed_at: Time.current()
+  confirmation_sent_at: Time.current,
+  confirmed_at: Time.current
 )

@@ -7,6 +7,8 @@ RSpec.describe RefreshToken, type: :model do
   end
 
   context 'associations' do
-    it { is_expected.to belong_to(:jti_registry).with_foreign_key(:jti).with_primary_key(:jti) }
+    it {
+      is_expected.to belong_to(:jti_registry).with_foreign_key(:jti).with_primary_key(:jti).inverse_of(:refresh_token)
+    }
   end
 end

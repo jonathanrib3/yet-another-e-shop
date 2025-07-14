@@ -1,8 +1,32 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+plugins:
+  - rubocop-rails
+  - rubocop-rspec_rails
+require:
+  - rubocop-rails
+  - rubocop-rspec_rails
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+Bundler/OrderedGems:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude: 
+    - '**/*_spec.rb'
+    - 'Guardfile'
+    - '**/*.rake'
+    - 'db/migrate/**'
+Metrics/MethodLength:
+  Max: 25
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Rails/NotNullColumn:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'app/controllers/v1/concerns/authenticator.rb'
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
