@@ -9,8 +9,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, format: { with: EMAIL_VALIDATION_REGEX }
   validates :password, format: { with: PASSWORD_VALIDATION_REGEX }, if: -> { will_save_change_to_password_digest? }
 
-  has_many :black_listed_tokens, dependent: :destroy
-  has_one :refresh_token, dependent: :destroy
+  has_many :jti_registries, dependent: :destroy
+  has_many :black_listed_tokens, through: :jti_registries
 
   def confirmed?
     confirmed_at.present?

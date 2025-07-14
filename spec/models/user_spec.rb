@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   context 'associations' do
-    it { is_expected.to have_many(:black_listed_tokens).dependent(:destroy) }
-    it { is_expected.to have_one(:refresh_token).dependent(:destroy) }
+    it { is_expected.to have_many(:jti_registries).dependent(:destroy) }
+    it { is_expected.to have_many(:black_listed_tokens).through(:jti_registries) }
   end
 
   context 'validations' do
