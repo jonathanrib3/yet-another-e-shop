@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :customers, only: [ :create, :update, :destroy, :show ]
+    resources :customers, only: %i[create update destroy show]
   end
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?

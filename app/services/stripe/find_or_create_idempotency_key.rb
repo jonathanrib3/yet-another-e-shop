@@ -2,7 +2,7 @@
 
 module Stripe
   class FindOrCreateIdempotencyKey
-    VALID_OPERATIONS = [ "create", "update", "delete" ].freeze
+    VALID_OPERATIONS = %w[create update delete].freeze
 
     def initialize(idempotency_keys_repository:, customer_id:, operation:)
       @idempotency_keys_repository = idempotency_keys_repository
@@ -12,8 +12,8 @@ module Stripe
     end
 
     def call
-      idempotency_key = @idempotency_keys_repository.find_by_name(
-        idempotency_key_name
+      idempotency_key = @idempotency_keys_repository.find_by(
+        name: idempotency_key_name
       )
       if idempotency_key.blank?
         idempotency_key = @idempotency_keys_repository.create(name: idempotency_key_name, value: idempotency_key_value)
@@ -33,9 +33,9 @@ module Stripe
     end
 
     def validate_operation
-      unless VALID_OPERATIONS.include?(@operation)
-        raise Errors::Stripe::FindOrCreateIdempotencyKey::InvalidOperation
-      end
+      return if VALID_OPERATIONS.include?(@operation)
+
+      raise Errors::Stripe::FindOrCreateIdempotencyKey::InvalidOperation
     end
   end
 end

@@ -1,6 +1,6 @@
 class UserMailer < ApplicationMailer
   CONFIRMATION_EMAIL_SUBJECT = 'Confirm Your Account – Action Required'.freeze
-  RESET_PASSWORD_EMAIL_SUBJECT = "Reset Your Password – Action Required".freeze
+  RESET_PASSWORD_EMAIL_SUBJECT = 'Reset Your Password – Action Required'.freeze
   DEFAULT_FROM = 'bot@yetanothereshop.com'.freeze
   default from: DEFAULT_FROM
   layout 'mailer'.freeze
@@ -12,9 +12,9 @@ class UserMailer < ApplicationMailer
   end
 
   def reset_password_email(user)
-    @reset_password_link = "#{ENV["FRONTEND_BASE_URL"]}" \
+    @reset_password_link = "#{ENV['FRONTEND_BASE_URL']}" \
     "/users/password/reset/#{user.reset_password_token}"
-    @reset_password_cancellation_link = "#{ENV["FRONTEND_BASE_URL"]}" \
+    @reset_password_cancellation_link = "#{ENV['FRONTEND_BASE_URL']}" \
     "/users/password/reset/cancel?token=#{user.reset_password_token}"
 
     mail(to: user.email, subject: RESET_PASSWORD_EMAIL_SUBJECT)

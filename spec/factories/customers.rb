@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :customer do
-    first_name { "John" }
-    last_name { "Doe" }
-    phone_number { "+55111203912" }
-    document_number { "111.111.111-11" }
-    document_type { "cpf" }
-    date_of_birth { Date.new(1989, 06, 04) }
+    first_name { 'John' }
+    last_name { 'Doe' }
+    phone_number { '+55111203912' }
+    document_number { '111.111.111-11' }
+    document_type { 'cpf' }
+    date_of_birth { Date.new(1989, 0o6, 0o4) }
     stripe_customer_id { nil }
     user
 

@@ -6,7 +6,7 @@ module Stripe
     def perform(customer_id)
       customer = ::Customer.includes(:addresses).find(customer_id)
       idempotency_key = Stripe::FindOrCreateIdempotencyKey.new(
-        operation: "create",
+        operation: 'create',
         customer_id:,
         idempotency_keys_repository:
       ).call

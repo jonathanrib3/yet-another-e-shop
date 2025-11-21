@@ -46,7 +46,7 @@ module V1
 
     def invalid_refresh_token(exception)
       @message = exception.message
-      render template: "v1/error/error", status: :unauthorized
+      render template: 'v1/error/error', status: :unauthorized
     end
   end
 end

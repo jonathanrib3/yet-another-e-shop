@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "V1::Users::VerificationsController", type: :request do
+RSpec.describe 'V1::Users::VerificationsController', type: :request do
   let(:parsed_response) { response.parsed_body.deep_symbolize_keys }
-  include_context "current time and authentication constants stubs"
+  include_context 'current time and authentication constants stubs'
 
   describe 'POST /users/verify/:token' do
     context "when verifying a confirmation token logged in as the token's owner" do

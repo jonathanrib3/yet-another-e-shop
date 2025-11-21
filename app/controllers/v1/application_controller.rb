@@ -27,7 +27,7 @@ module V1
     def record_not_found(exception)
       @message = exception.message
 
-      render template: "v1/error/error", status: :not_found
+      render template: 'v1/error/error', status: :not_found
     end
   end
 end

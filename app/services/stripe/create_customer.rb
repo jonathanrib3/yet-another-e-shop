@@ -35,7 +35,7 @@ module Stripe
     end
 
     def residential_address
-      return nil unless @customer.residential_address.present?
+      return nil if @customer.residential_address.blank?
 
       {
         city: @customer.residential_address.city,

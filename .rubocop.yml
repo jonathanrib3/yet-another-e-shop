@@ -14,8 +14,11 @@ Metrics/BlockLength:
     - 'Guardfile'
     - '**/*.rake'
     - 'db/migrate/**'
+    - 'config/**/*'
+
 Metrics/MethodLength:
   Max: 25
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
@@ -25,8 +28,8 @@ Style/Documentation:
 Rails/NotNullColumn:
   Enabled: false
 
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'app/controllers/v1/concerns/authenticator.rb'
 Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Naming/VariableNumber:
   Enabled: false

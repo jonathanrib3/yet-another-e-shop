@@ -9,7 +9,7 @@ module Customers
       @customer.assign_attributes(
         **customer_attributes,
         addresses_attributes:,
-        user_attributes: @update_customer_data[:user] || {},
+        user_attributes: @update_customer_data[:user] || {}
       )
 
       @customer.save!
@@ -38,11 +38,9 @@ module Customers
     end
 
     def addresses_to_be_destroyed
-      @addresses_to_be_destroyed ||= (
-        @update_customer_data.dig(:addresses, :delete)&.map do |address_id|
-            {  id: address_id, _destroy: true }
-        end || []
-      )
+      @addresses_to_be_destroyed ||= @update_customer_data.dig(:addresses, :delete)&.map do |address_id|
+        { id: address_id, _destroy: true }
+      end || []
     end
   end
 end

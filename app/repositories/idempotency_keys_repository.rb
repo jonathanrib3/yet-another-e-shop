@@ -1,5 +1,5 @@
 class IdempotencyKeysRepository
-  IDEMPOTENCY_KEYS_DEFAULT_TTL = 86400
+  IDEMPOTENCY_KEYS_DEFAULT_TTL = 86_400
 
   def initialize
     @redis_database = RedisConnection.cache_database
