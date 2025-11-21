@@ -7,7 +7,7 @@ module V1
       before_action :authenticate_user!
 
       def black_list
-        authorize :admin_user, :black_list?
+        authorize current_user, policy_class: V1::Admin::UsersPolicy
 
         @black_listed_token = Authentication::Revoker.new(jti: black_list_token_params['jti']).call
 

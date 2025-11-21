@@ -1,0 +1,7 @@
+en:
+  errors:
+    attributes:
+      document_number:
+        invalid_cpf_format: "Invalid CPF format"
+        invalid_rg_format: "Invalid RG format"
+        invalid_passport_format: "Invalid Passport format"

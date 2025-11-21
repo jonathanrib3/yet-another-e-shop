@@ -5,8 +5,7 @@ module V1
       before_action :authenticate_user!
 
       def create
-        authorize :admin_user, :create?
-
+        authorize current_user, policy_class: V1::Admin::UsersPolicy
         @admin = ::Users::Create.new(
           email: admin_user_params['email'],
           password: admin_user_params['password'],
@@ -18,7 +17,7 @@ module V1
       end
 
       def update
-        authorize :admin_user, :update?
+        authorize current_user, policy_class: V1::Admin::UsersPolicy
 
         @admin = User.find(params[:id])
         if @admin.update(admin_user_params.to_h.deep_symbolize_keys)

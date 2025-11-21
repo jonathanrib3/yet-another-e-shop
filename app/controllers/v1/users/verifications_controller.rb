@@ -1,14 +1,14 @@
 module V1
   module Users
-    class UsersController < V1::ApplicationController
+    class VerificationsController < V1::ApplicationController
       include Authenticator
 
       rescue_from Errors::Users::Verify::InvalidConfirmationToken, with: :invalid_confirmation_token
-      before_action :authenticate_user!, only: [:verify]
+      before_action :authenticate_user!, only: [:create]
 
-      def verify
+      def create
         user = User.find_by!(confirmation_token: params[:token], confirmed_at: nil)
-        authorize user
+        authorize user, policy_class: V1::Users::VerificationsPolicy
         if Time.current > user.confirmation_token_expires_at
           raise Errors::Users::Verify::InvalidConfirmationToken, I18n.t('errors.messages.invalid_confirmation_token')
         end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    email { 'email@mail.com' }
+    email { Faker::Internet.email }
     password { '123123Qwe.' }
     role { 0 }
     confirmation_token { SecureRandom.hex(10) }
